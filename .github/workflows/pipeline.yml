@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run golangcicd-lint
-      run: actions-contrib/golangci-lint@v1
+      uses: actions-contrib/golangci-lint@v1
   deploy:
     runs-on: ubuntu-latest
     name: Deploy on heroku
