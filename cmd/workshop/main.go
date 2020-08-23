@@ -4,10 +4,11 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/ilyakaznacheev/cleanenv"
-	"internal/handler"
 	"log"
 	"net/http"
+	"workshop/internal/api/jokes"
 	"workshop/internal/config"
+	"workshop/internal/handler"
 )
 
 func main() {
@@ -17,7 +18,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	h := handler.NewHandler()
+	log.Printf("Joke base url: %v\n", cfg.JokeURL)
+	apiClient := jokes.NewJokeClient(cfg.JokeURL)
+	h := handler.NewHandler(apiClient)
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/test", h.Home)
